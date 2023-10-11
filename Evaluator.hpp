@@ -1,6 +1,6 @@
 #ifndef EVALUATOR_HPP
 #define EVALUATOR_HPP
-#include "Headers.hpp"
+
 
 class Evaluator
 {
@@ -9,6 +9,7 @@ class Evaluator
         void add_to_tree(Node*);
         void value_generator(int);
         void tree_height(Node*);
+        void traverse_postorder(Node*);
 };
 
 #endif

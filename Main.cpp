@@ -1,5 +1,4 @@
 #include "Headers.hpp"
-#include "Parser.hpp"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -33,7 +32,9 @@ int main()
 {
     Parser p;
     p.start();
-    //Node *root = new Node{p.token_string};
-    //Node root{p.token_string};
+    Node root {p.token_string,p.l_count}; // Change of scope ???
+    Evaluator e;
+
+    e.traverse_postorder(&root);
     return 0;   
 }

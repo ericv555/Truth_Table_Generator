@@ -1,6 +1,11 @@
+#include "Headers.hpp"
 #include "Evaluator.hpp"
 #include <iostream>
 using namespace std;
+
+
+
+
 void Evaluator:: value_generator(int n)
 {
 
@@ -28,4 +33,24 @@ void Evaluator:: add_to_tree(Node *root)
         tree.push(*root->left);
         tree.push(*root->right);
     }*/
+}
+void Evaluator ::  traverse_postorder(Node* temp)
+{
+    if(temp->vec_t.size() == 1){
+    for(Token tok: temp->vec_t){
+        //string_view str(tok.text);
+        //cout << "Traversal1: " << str.substr(0,tok.text_len) << endl;
+        tree.push(*temp);
+        cout << tree.top().vec_t.front().text<<endl;
+        }
+    cout << endl;
+    return;
+    }
+    for(Token tok: temp->vec_t){
+        //string_view str(tok.text);
+        //cout << "Traversal2: " << str.substr(0,tok.text_len) << endl;
+        }
+    cout << endl;
+    traverse_postorder(temp->left);
+    traverse_postorder(temp->right);
 }

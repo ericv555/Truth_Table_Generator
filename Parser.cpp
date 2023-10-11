@@ -7,11 +7,7 @@
 using namespace std;
 
 
-void traverse_postorder(Node*, Evaluator*);
-//void start();
-//void follow();
-//void badlogic();
-//void breakitup();
+
 int letter_count(Lexer *l){
     int temp = l->unique_letters.size();
     l->unique_letters.clear();
@@ -32,7 +28,6 @@ void Parser :: start()
     Lexer l = lexer_new(content, cont_len);
     Token t;
     t = lexer_next(&l); // start push
-    //cout << token_kinderizer(t.kind) << endl;
     to_tokenstring(&t);
 
     // Three valid starting characters of a well formed formula
@@ -49,7 +44,7 @@ void Parser :: follow(Lexer *l)
     while(t.kind != TOKEN_END)
     {
         this->to_tokenstring(&t);
-        //cout << token_kinderizer(t.kind) << endl;
+
         if(t.kind == TOKEN_LETTER)
         {
             t=lexer_next(l);
@@ -147,42 +142,13 @@ void Parser :: follow(Lexer *l)
         
     }
     if(l->parantheses != 0) {INVALID("UNEVEN PARANTHESES COUNT");}
-    int l_count = letter_count(l);
-    //e.add_to_tree(root);
-    //for(Token tok : root.right->vec_t){cout << "NODE:" <<token_kinderizer(tok.kind) << endl;}
-    //cout << root.left->right<< endl;
-    //t_size(&root);
-    Node root {token_string,l_count}; // Change of scope ???
-    Evaluator e;
+    l_count = letter_count(l);
 
-    //cout << root.left->left->left<< endl;
-    //cout << "hi" << endl;
-    traverse_postorder(&root,&e);
+
 
 
 
 
 }
-int i =0;
-void traverse_postorder(Node* temp, Evaluator* e)
-{
-    cout <<++i<<endl;
-    if(temp->vec_t.size() == 1){
-    for(Token tok: temp->vec_t){
-        //string_view str(tok.text);
-        //cout << "Traversal1: " << str.substr(0,tok.text_len) << endl;
-        e->tree.push(*temp);
-        cout << e->tree.top().vec_t.front().text<<endl;
-        }
-    cout << endl;
-    return;
-    }
-    for(Token tok: temp->vec_t){
-        //string_view str(tok.text);
-        //cout << "Traversal2: " << str.substr(0,tok.text_len) << endl;
-        }
-    cout << endl;
-    traverse_postorder(temp->left,e);
-    traverse_postorder(temp->right,e);
-}
+
 

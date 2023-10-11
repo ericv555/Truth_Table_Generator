@@ -1,9 +1,8 @@
 #ifndef NODE_HPP
 #define NODE_HPP
-#include "Headers.hpp"
 #include <iterator>
-#include<stack>
-#include<boost/dynamic_bitset/dynamic_bitset.hpp>
+#include <stack>
+#include <boost/dynamic_bitset/dynamic_bitset.hpp>
 
 class Node
 {
