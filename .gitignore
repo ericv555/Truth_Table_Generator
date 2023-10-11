@@ -3,5 +3,5 @@
 /.vscode
 /..gitignore
 /.proof_checker
-./ValueGenerator.cpp
-./ValueGenerator.hpp
+/.ValueGenerator.cpp
+/.ValueGenerator.hpp
