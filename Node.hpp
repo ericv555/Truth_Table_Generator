@@ -17,6 +17,7 @@ class Node
         Node();
         Node(vector<Token>&);
         Node(vector<Token>&, int);
+        void leaf_node();
         void descent();
         void set_evaluation();
         

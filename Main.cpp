@@ -34,7 +34,7 @@ int main()
     p.start();
     Node root {p.token_string,p.l_count}; // Change of scope ???
     Evaluator e;
-
     e.traverse_postorder(&root);
+    
     return 0;   
 }

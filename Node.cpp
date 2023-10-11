@@ -20,14 +20,14 @@ void is_wrapped(vector<Token>& vec_t){
                 vec_t.shrink_to_fit();
         }
 }
-void leaf_node(Node *node){
+void Node :: leaf_node(){
     int l_count=0;
     vector<Token> left_letter;
-    left_letter.push_back(node->vec_t.front());
+    left_letter.push_back(vec_t.front());
     vector<Token> right_letter;
-    right_letter.push_back(node->vec_t.back());
-    node->left = new Node(left_letter);
-    node->right = new Node(right_letter);
+    right_letter.push_back(vec_t.back());
+    left = new Node(left_letter);
+    right = new Node(right_letter);
 
 }
 
@@ -87,7 +87,7 @@ void Node :: descent()
         {
             if(is_atomic(vec_t)==true){
                 child_op = tok.kind;
-                leaf_node(this);
+                leaf_node();
                 break;
            }
             else if(p_count == 0){
