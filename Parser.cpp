@@ -7,7 +7,7 @@
 using namespace std;
 
 
-void traverse_postorder(Node *temp);
+void traverse_postorder(Node*, Evaluator*);
 //void start();
 //void follow();
 //void badlogic();
@@ -148,22 +148,41 @@ void Parser :: follow(Lexer *l)
     }
     if(l->parantheses != 0) {INVALID("UNEVEN PARANTHESES COUNT");}
     int l_count = letter_count(l);
-    Node *root = new Node{token_string,l_count}; // Change of scope ???
-    traverse_postorder(root);
-    //Evaluator e;
     //e.add_to_tree(root);
-    //for(Token tok : root.right->right->vec_t){cout << "NODE:" <<token_kinderizer(tok.kind) << endl;}
-    //cout << token_kinderizer(root.left->left->vec_t.at(1).kind) << endl;
+    //for(Token tok : root.right->vec_t){cout << "NODE:" <<token_kinderizer(tok.kind) << endl;}
+    //cout << root.left->right<< endl;
+    //t_size(&root);
+    Node root {token_string,l_count}; // Change of scope ???
+    Evaluator e;
+
+    //cout << root.left->left->left<< endl;
+    //cout << "hi" << endl;
+    traverse_postorder(&root,&e);
+
+
 
 
 }
-void traverse_postorder(Node* temp)
+int i =0;
+void traverse_postorder(Node* temp, Evaluator* e)
 {
-    cout << "Traversal: " << token_kinderizer(temp->child_op) << endl;
-    if(temp!=nullptr)
-    {
-        traverse_postorder(temp->left);
-        traverse_postorder(temp->right);
+    cout <<++i<<endl;
+    if(temp->vec_t.size() == 1){
+    for(Token tok: temp->vec_t){
+        //string_view str(tok.text);
+        //cout << "Traversal1: " << str.substr(0,tok.text_len) << endl;
+        e->tree.push(*temp);
+        cout << e->tree.top().vec_t.front().text<<endl;
+        }
+    cout << endl;
+    return;
     }
+    for(Token tok: temp->vec_t){
+        //string_view str(tok.text);
+        //cout << "Traversal2: " << str.substr(0,tok.text_len) << endl;
+        }
+    cout << endl;
+    traverse_postorder(temp->left,e);
+    traverse_postorder(temp->right,e);
 }
 

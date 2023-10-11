@@ -10,7 +10,6 @@
 using namespace std;
       
 void is_wrapped(vector<Token>& vec_t){
-    bool flag=false;
     if(vec_t.front().kind == TOKEN_LEFTPARANTHESES){
             vec_t.erase(vec_t.begin());
             vec_t.shrink_to_fit();
@@ -19,6 +18,19 @@ void is_wrapped(vector<Token>& vec_t){
                 vec_t.erase(vec_t.end()-1);
                 vec_t.shrink_to_fit();
         }
+}
+void leaf_node(Node *node){
+    int l_count=0;
+    vector<Token> left_letter;
+    left_letter.push_back(node->vec_t.front());
+    vector<Token> right_letter;
+    right_letter.push_back(node->vec_t.back());
+    node->left = new Node(left_letter);
+    node->right = new Node(right_letter);
+    //for(Token tik : left_letter){cout <<"LLeft: " <<token_kinderizer(tik.kind)<<endl;}
+    //cout << token_kinderizer(node->child_op) << endl;
+    //for(Token tik : right_letter){cout <<"LRight: " <<token_kinderizer(tik.kind)<<endl;}
+
 }
 
 bool is_atomic(vector<Token>& vec_t){
@@ -43,39 +55,23 @@ int t_size(Node* node){
 }
 
 Node :: Node(){
-    Node *left = nullptr;
-    Node *right= nullptr;
+    //cout << "Default Constructor" << endl;
+    this->left = nullptr;
+    this->right= nullptr;
 }
 Node :: Node(vector<Token>& vec_t){
     this->vec_t = vec_t;
-    void *left = malloc(6*sizeof(Node*));
-    void *right = malloc(6*sizeof(Node*));
-    left = &left;
-    right = &right;
+    left = new Node;
+    right = new Node;
     
     descent();
 }
 Node :: Node(vector<Token>& vec_t, int letters){
     l_count=letters;
     this->vec_t = vec_t;
-    Node *left = nullptr;
-    Node *right= nullptr;
+    left = new Node;
+    right = new Node;
     descent();
-}
-void Node :: set_evaluation(){ // SHOULD ONLY ACCEPT ATOMICS
-    if(child_op == TOKEN_AND){
-        
-    }
-    else if(child_op == TOKEN_OR){
-        
-    }
-    else if(child_op == TOKEN_ARROW){
-        
-    }
-    else if(child_op == TOKEN_BIOCONDITONAL){
-        
-    }
-    
 }
 void Node :: descent()
 {
@@ -92,28 +88,45 @@ void Node :: descent()
         else if((tok.kind &(TOKEN_AND | TOKEN_OR | TOKEN_ARROW | TOKEN_BIOCONDITONAL))>0)
         {
             if(is_atomic(vec_t)==true){
-                cout << "Main connective found: " << token_kinderizer(tok.kind) << endl;
-                cout << "EVALUATABLE" << endl;
+                //cout << "Main connective found: " << token_kinderizer(tok.kind) << endl;
+                //cout << "EVALUATABLE" << endl;
                 child_op = tok.kind;
+                leaf_node(this);
                 //set_evaluation();
                 //for(Token tik : vec_t){cout <<"NODE: " <<token_kinderizer(tik.kind)<<endl;}
                 //cout << "--------------" <<endl;
                 break;
-            }
+           }
             else if(p_count == 0){ //second term MUST be replaced
-                cout << "Main connective found: " << token_kinderizer(tok.kind) << endl;
+                //cout << "Main connective found: " << token_kinderizer(tok.kind) << endl;
                 child_op = tok.kind;
-                //for(Token tik : vec_t){cout <<"NODE: " <<token_kinderizer(tik.kind)<<endl;}
                 vector<Token> left_node(vec_t.begin(), vec_t.begin()+i); // CHANGE TO ITERATOR PRE FINAL VERSION
                 is_wrapped(left_node);
                 vector<Token> right_node(vec_t.begin()+(i+1), vec_t.end()); // CHANGE TO ITERATOR PRE FINAL VERSION
                 is_wrapped(right_node);
-                left = new Node{left_node,l_count};
-                right =  new Node{right_node,l_count};
+                //for(Token tik : left_node){cout <<"Left: " <<token_kinderizer(tik.kind)<<endl;}
+                //for(Token tik : right_node){cout <<"Right: " <<token_kinderizer(tik.kind)<<endl;}
+                left = new Node{left_node};
+                right =  new Node{right_node};
             }
             else{continue;}
         }
     }
+}
+void Node :: set_evaluation(){ // SHOULD ONLY ACCEPT ATOMICS
+    if(child_op == TOKEN_AND){
+        
+    }
+    else if(child_op == TOKEN_OR){
+        
+    }
+    else if(child_op == TOKEN_ARROW){
+        
+    }
+    else if(child_op == TOKEN_BIOCONDITONAL){
+        
+    }
+    
 }
 void Evaluator:: value_generator(int n)
 {

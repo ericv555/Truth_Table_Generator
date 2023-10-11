@@ -17,7 +17,7 @@ using namespace std;
 
 
 /*int main()
-{
+{d
     cout<< "What would you like to see." <<endl;
     cout << "Option 1: Evaluate formula and get final truth values" << endl;
     cout << "Option 2: Given a formula will give Tautology, Contradiction, Contingency." << endl;
