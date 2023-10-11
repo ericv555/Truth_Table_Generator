@@ -4,6 +4,7 @@
 #include "Headers.hpp"
 #include "ErrorHandling.hpp"
 #include "Evaluator.hpp"
+#include "Node.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>

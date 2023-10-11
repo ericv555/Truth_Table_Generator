@@ -4,6 +4,7 @@
 #include "ErrorHandling.hpp"  
 #include "Evaluator.hpp"
 #include "Parser.hpp"
+#include "Node.hpp"
 #include <stdlib.h>
 
 
