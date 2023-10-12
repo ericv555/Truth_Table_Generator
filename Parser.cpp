@@ -22,6 +22,7 @@ void Parser :: to_tokenstring(Token *t)
 }
 void Parser :: start()
 {
+    //const char *content = "p&q";
     const char *content = "(p&q)->(p&(qvr))";
     //const char *content = "(p->q)&((p&r)v(p<->t))";
     size_t cont_len = strlen(content);
@@ -143,11 +144,6 @@ void Parser :: follow(Lexer *l)
     }
     if(l->parantheses != 0) {INVALID("UNEVEN PARANTHESES COUNT");}
     l_count = letter_count(l);
-
-
-
-
-
 
 }
 

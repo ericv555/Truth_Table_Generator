@@ -10,9 +10,9 @@ class Node
         Node *left;
         Node *right;
         vector<Token> vec_t;
-        Token parent_op;
         Token_Kind child_op;
         int l_count;
+        int level;
         boost::dynamic_bitset<> evaluation;
         Node();
         Node(vector<Token>&);

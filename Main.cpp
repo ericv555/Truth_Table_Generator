@@ -32,7 +32,8 @@ int main()
 {
     Parser p;
     p.start();
-    Node root {p.token_string,p.l_count}; // Change of scope ???
+    Node root {p.token_string,p.l_count};
+    //Perhaps at this point parser can be destroyed to save memory pre-evaluation?
     Evaluator e;
     e.traverse_postorder(&root);
     

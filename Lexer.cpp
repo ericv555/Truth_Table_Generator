@@ -143,7 +143,7 @@ Token lexer_next(Lexer *l)
     }
     else if(l->content[l->cursor] == '-')
     {
-        //peak ahead to the next char since arrow is a length 2 substring
+        //push ahead to the next char since arrow is a length 2 substring
         l->cursor += 1;
         lexer_trim_left(l);
         if(l->content[l->cursor] == '>')

@@ -65,6 +65,7 @@ Node :: Node(vector<Token>& vec_t){
     descent();
 }
 Node :: Node(vector<Token>& vec_t, int letters){
+    level=0;
     l_count=letters;
     this->vec_t = vec_t;
     left = new Node;
@@ -82,7 +83,7 @@ void Node :: descent()
         if(tok.kind == TOKEN_LEFTPARANTHESES){p_count += 1;}
         else if(tok.kind == TOKEN_RIGHTPARANTHESES){p_count -= 1;}
         else if(tok.kind == TOKEN_LETTER){continue;}
-        else if (tok.kind == TOKEN_NEGATION){continue;} // This will need to have its own conditions eventually) ~(p->q) needs case.
+        else if (tok.kind == TOKEN_NEGATION){continue;} // This will need to have its own conditions eventually ~(p->q) needs case.
         else if((tok.kind &(TOKEN_AND | TOKEN_OR | TOKEN_ARROW | TOKEN_BIOCONDITONAL))>0)
         {
             if(is_atomic(vec_t)==true){
