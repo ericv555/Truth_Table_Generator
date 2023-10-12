@@ -1,7 +1,7 @@
 /boost_1_82_0
 /proof_checker.dSYM
 /.vscode
-/..gitignore
-/.proof_checker
-/.ValueGenerator.cpp
-/.ValueGenerator.hpp
+/.gitignore
+/proof_checker
+/ValueGenerator.cpp
+/ValueGenerator.hpp
