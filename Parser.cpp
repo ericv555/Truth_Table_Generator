@@ -20,9 +20,9 @@ void Parser :: to_tokenstring(Token *t)
 {
     this->token_string.push_back(*t);
 }
-void Parser :: start()
+void Parser :: start(string sentence)
 {
-    const char *content = "(p&q)&s";
+    const char *content = &sentence[0];
     //const char *content = "(p&q)->(p&(qvr))";
     //const char *content = "(p->q)&((p&r)v(p<->t))";
     size_t cont_len = strlen(content);

@@ -10,15 +10,14 @@ class Node
         Node *left;
         Node *right;
         vector<Token> vec_t;
-        Token_Kind child_op;
+        Token_Kind main_op;
         int l_count;
-        Node *Parent;
         boost::dynamic_bitset<> value;
         Node();
         Node(vector<Token>&);
         Node(vector<Token>&, int);
     private:
-        void leaf_node();
+        void leaf_node(int);
         void descent();
         
 };

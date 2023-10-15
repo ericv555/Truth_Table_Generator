@@ -30,10 +30,12 @@ using namespace std;
 
 int main()
 {
+    cout << "Enter logical expression" << endl;
+    string sentence;
+    cin >> sentence;
     Parser p;
-    p.start();
+    p.start(sentence);
     Node root {p.token_string,p.l_count};
-    //Perhaps at this point parser can be destroyed to save memory pre-evaluation?
     Evaluator e;
     e.add_to_tree(&root);
     e.evaluate(p.l_count);

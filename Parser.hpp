@@ -9,7 +9,7 @@ using namespace std;
 class Parser
 {
     public:
-        void start();
+        void start(string);
         void follow(Lexer *);
         void to_tokenstring(Token*);
         vector<Token> token_string;
