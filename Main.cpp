@@ -35,7 +35,9 @@ int main()
     Node root {p.token_string,p.l_count};
     //Perhaps at this point parser can be destroyed to save memory pre-evaluation?
     Evaluator e;
-    e.traverse_postorder(&root);
+    e.add_to_tree(&root);
+    e.evaluate(p.l_count);
+    cout << root.value << endl;
     
     return 0;   
 }

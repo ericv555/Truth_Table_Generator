@@ -12,14 +12,14 @@ class Node
         vector<Token> vec_t;
         Token_Kind child_op;
         int l_count;
-        int level;
-        boost::dynamic_bitset<> evaluation;
+        Node *Parent;
+        boost::dynamic_bitset<> value;
         Node();
         Node(vector<Token>&);
         Node(vector<Token>&, int);
+    private:
         void leaf_node();
         void descent();
-        void set_evaluation();
         
 };
 

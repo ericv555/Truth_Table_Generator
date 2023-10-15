@@ -20,17 +20,6 @@ void is_wrapped(vector<Token>& vec_t){
                 vec_t.shrink_to_fit();
         }
 }
-void Node :: leaf_node(){
-    int l_count=0;
-    vector<Token> left_letter;
-    left_letter.push_back(vec_t.front());
-    vector<Token> right_letter;
-    right_letter.push_back(vec_t.back());
-    left = new Node(left_letter);
-    right = new Node(right_letter);
-
-}
-
 bool is_atomic(vector<Token>& vec_t){
     int check = 0;
     for(Token i : vec_t)
@@ -65,12 +54,24 @@ Node :: Node(vector<Token>& vec_t){
     descent();
 }
 Node :: Node(vector<Token>& vec_t, int letters){
-    level=0;
     l_count=letters;
     this->vec_t = vec_t;
     left = new Node;
     right = new Node;
+
     descent();
+}
+void Node :: leaf_node(){
+    int l_count=0;
+    vector<Token> left_letter;
+    left_letter.push_back(vec_t.front());
+    vector<Token> right_letter;
+    right_letter.push_back(vec_t.back());
+    left = new Node(left_letter);
+    right = new Node(right_letter);
+    left->Parent = this;
+    right->Parent = this;
+
 }
 void Node :: descent()
 {
@@ -98,7 +99,9 @@ void Node :: descent()
                 vector<Token> right_node(vec_t.begin()+(i+1), vec_t.end()); // CHANGE TO ITERATOR PRE FINAL VERSION
                 is_wrapped(right_node);
                 left = new Node{left_node};
+                left->Parent = this;
                 right =  new Node{right_node};
+                right->Parent = this;
             }
             else{continue;}
         }

@@ -1,65 +1,92 @@
 #include "Headers.hpp"
 #include "Evaluator.hpp"
 #include <iostream>
+#include <algorithm>
+#include <boost/dynamic_bitset/dynamic_bitset.hpp>
 using namespace std;
 
 
-
-
-void Evaluator:: value_generator(int n)
-{
-
-    int numlines = (1<<n);
-
-    //n-1 is the first byte
-    //0 is the last bit of the byte
-    //numlines-1 is the first bit of the byte
-
-    //uint8_t truthtable[numlines][n];
-    for(int j = (numlines-1); j >=0;j--){
-        for(int i=0;i<n;i++){
-        //truthtable[i][j]= boost::dynamic_bitset<>(numlines, j)[i];
-        cout << boost::dynamic_bitset<>(n, j)[i];
-        //cout <<truthtable[i][j]; //Prints truth table
-       }
-       cout << endl;
-    }
-}
 void Evaluator:: add_to_tree(Node *root)
 {
-    /*bool root_node=true;
-    if(root_node==true){
-        tree.push(*root);
-        tree.push(*root->left);
-        tree.push(*root->right);
-    }*/
-}
-int g_level=0;
-void Evaluator ::  traverse_postorder(Node* temp)
-{
-    if(temp->vec_t.size() == 1){
-        for(Token tok: temp->vec_t){
-            //string_view str(tok.text);
-            //cout << "Traversal1: " << str.substr(0,tok.text_len) << endl;
-            tree.push(*temp);
-            cout << tree.top().vec_t.front().text[0]<<endl;
-        }
-        cout << endl;
-    temp->level=g_level;
-    cout <<"Pre1:  "<<g_level << endl;
-    g_level-=1;
-    cout <<"Post1:  "<<g_level << endl;
-    return;
+    if(root->vec_t.size() == 1){
+        tree.push(root);
+        return;
     }
-    for(Token tok: temp->vec_t){
-        string_view str(tok.text);
-        cout << "Traversal2: " << str.substr(0,tok.text_len) << endl;
+    tree.push(root);
+    add_to_tree(root->left);
+    add_to_tree(root->right);
+}
+void Evaluator:: value_generator(Node *node, int n, int total)
+{
+    int numlines = (1<<total);
+    for(int j = numlines-1; j >=0;j--){
+        boost::dynamic_bitset<> nbyte(n,j);
+        //cout << jerry[n-1] << endl;
+        //cout << endl;
+        node->value.push_back(nbyte[n-1]);
+    }
+    node->value.flip(); // To format from 1 to 0 (personal preference)
+}
+char Evaluator :: top_letter(){
+    return (tree.top()->vec_t.front().text[0]);
+}
+void Evaluator :: evaluate(int n){
+    static int total_letters = n;
+    vector<char> unique_letters;
+    while(tree.empty() != true) // Change to while tree is not empty after implementation
+    {
+        bool is_unique=true;
+        if(tree.top()->vec_t.size()==1) // Single Letter assignment block
+        {
+            int index =total_letters;
+            if (unique_letters.empty() == true)
+            {
+                unique_letters.push_back(top_letter());
+                value_generator(tree.top(),total_letters,total_letters);
+                //cout <<"1. " <<tree.top()->value << endl;
+                tree.pop();
+            }
+            else{
+                
+                for(char special : unique_letters){
+                    if(special == top_letter()){
+                        value_generator(tree.top(),index,total_letters);
+                        //cout <<"2. "<<tree.top()->value << endl;
+                        is_unique=false;
+                    }
+                    index--;
+                }
+                if(is_unique !=false){
+                        unique_letters.push_back(top_letter());
+                        value_generator(tree.top(),index,total_letters);
+                        //cout <<"3. "<<tree.top()->value << endl;
+                    }
+            tree.pop();
+            }
         }
-        cout << endl;
-    temp->level=g_level;
-    cout <<"Pre:  "<<g_level << endl;
-    g_level+=1;
-    cout <<"Post:  "<<g_level << endl;
-    traverse_postorder(temp->left);
-    traverse_postorder(temp->right);
+        // Only two primary controls paths are needed since node vector will either have one character or more than one
+        else{
+            if(tree.top()->child_op == TOKEN_AND){
+                tree.top()->value = (tree.top()->left->value & tree.top()->right->value);
+            }
+            else if(tree.top()->child_op == TOKEN_OR){
+                tree.top()->value = (tree.top()->left->value | tree.top()->right->value);
+            }
+            else if(tree.top()->child_op == TOKEN_ARROW){
+                tree.top()->value = (((tree.top()->left->value)) | ~tree.top()->right->value);
+            }
+            else if(tree.top()->child_op == TOKEN_BIOCONDITONAL){
+                tree.top()->value = ((tree.top()->left->value ^ tree.top()->right->value).flip());
+            }
+            else if(tree.top()->child_op == TOKEN_NEGATION){
+                //UNIMPLEMENTED
+            }
+            else{cout << "ERROR OCCURED IN EVALUATION"<<endl; exit(2);} // I dont think anything can get this far.
+            //cout << tree.top()->value << endl;
+            tree.pop();
+        }
+    }
+
+    
+        
 }

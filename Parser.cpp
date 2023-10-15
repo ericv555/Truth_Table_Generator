@@ -22,8 +22,8 @@ void Parser :: to_tokenstring(Token *t)
 }
 void Parser :: start()
 {
-    //const char *content = "p&q";
-    const char *content = "(p&q)->(p&(qvr))";
+    const char *content = "(p&q)&s";
+    //const char *content = "(p&q)->(p&(qvr))";
     //const char *content = "(p->q)&((p&r)v(p<->t))";
     size_t cont_len = strlen(content);
     Lexer l = lexer_new(content, cont_len);
