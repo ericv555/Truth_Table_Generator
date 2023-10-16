@@ -30,7 +30,7 @@ char Evaluator :: top_letter(){
     return (tree.top()->vec_t.front().text[0]);
 }
 void Evaluator :: evaluate(int n){
-    static int total_letters = n;
+    int total_letters = n;
     vector<char> unique_letters;
     while(tree.empty() != true) // Change to while tree is not empty after implementation
     {

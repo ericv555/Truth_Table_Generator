@@ -26,22 +26,24 @@ using namespace std;
     return  0;
 }*/
 
-
-
 int main()
 {
+    cout << "Here are a few examples of valid logical expressions:"<<endl;
+    cout << "p&q "<<endl<< "~(p->q)"<<endl<< "((p&q)vs)->~(p<->x)"<<endl;
+    cout << "Any letters can be used as variables except for v, which is the OR operator." <<endl<<endl;
+    cout << "Enter logical expression:" << endl;
+    cout<< "Enter 0 to break the loop."<<endl;
     while(true){
-    cout << "Enter logical expression" << endl;
     string sentence;
     cin >> sentence;
+    if (sentence == "0"){exit(0);}
     Parser p;
     p.start(sentence);
-    if(p.well_formed == false){break;}
+    if(p.well_formed == false){exit(0);}
     Node root {p.token_string};
     Evaluator e;
     e.add_to_tree(&root);
     e.evaluate(p.l_count);
-    cout << root.value << endl;
-    }
+    cout << root.value << endl;}
     return 0;   
 }

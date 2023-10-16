@@ -31,7 +31,7 @@ const char* token_kinderizer(Token_Kind kind) // purely for readable output of t
         case TOKEN_BIOCONDITONAL:
             return "BICONDITONAL OPERATOR";
         default:
-            return "ERROR IN KINDERIZER"; // Does not do what I want it to
+            return "ERROR IN KINDERIZER";
 
         return NULL;
         

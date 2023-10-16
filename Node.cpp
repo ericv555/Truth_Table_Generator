@@ -9,7 +9,11 @@
 #include <iterator>
 #include <boost/dynamic_bitset/dynamic_bitset.hpp>
 using namespace std;
-      
+
+/*
+Helper Function:
+Removes outer most parantheses from vector of Tokens.
+*/
 void unwrap(vector<Token>& vec_t){
     if(vec_t.front().kind == TOKEN_LEFTPARANTHESES){
             vec_t.erase(vec_t.begin());
@@ -20,6 +24,12 @@ void unwrap(vector<Token>& vec_t){
                 vec_t.shrink_to_fit();
         }
 }
+/*
+Helper Function:
+Returns true if the vector of tokens is a valid atomic sentence which is of the form:
+LETTER BINARY_CONNECTIVE LETTER
+Ignores parantheses and negations.
+*/
 bool is_atomic(vector<Token>& vec_t){
     int check = 0;
     for(Token i : vec_t)
@@ -36,6 +46,12 @@ bool is_atomic(vector<Token>& vec_t){
     if(check == 0){ return true;}
     else{return false;}
 }
+/*
+Helper Function:
+Used for offset of left and right vector instantiation.
+Offsets the number of negations since negations can be called sequently
+For example: ~~~~~~~~p or ~~p&q 
+*/
 size_t double_negation(vector<Token>& vec_t){
     size_t number_of_negations =0;
     for(Token tok : vec_t){
@@ -78,6 +94,12 @@ void Node :: leaf_node(int i){
     right = new Node(right_letter);
     }
 }
+/*Iterates the vector of Tokens until it finds a connective.
+It does this by, for the case of binary connectives:
+Stripping any outer most paranthesese and finding the connective not surround by any.
+For Unary Connectives:
+Looking to the next token to determine if it follows a letter, left paranatheses, or another unary connective.
+*/
 void Node :: descent()
 {
     int p_count = 0; // Parantheses count
@@ -122,7 +144,7 @@ void Node :: descent()
                 vector<Token> right_node(vec_t.begin()+(i+1), vec_t.end()); // CHANGE TO ITERATOR PRE FINAL VERSION
                 unwrap(right_node);
                 left = new Node{left_node};
-                right =  new Node{right_node};
+                right = new Node{right_node};
             }
             else{continue;}
         }
