@@ -58,14 +58,6 @@ Node :: Node(vector<Token>& vec_t){
     
     descent();
 }
-Node :: Node(vector<Token>& vec_t, int letters){
-    l_count=letters;
-    this->vec_t = vec_t;
-    left = new Node;
-    right = new Node;
-
-    descent();
-}
 void Node :: leaf_node(int i){
     int l_count=0;
     if(vec_t.size() != 3){

@@ -15,6 +15,7 @@ class Parser
         vector<Token> token_string;
         int p_count = 0;
         int l_count = 0;
+        bool well_formed = true;
 };
 int letter_count(Lexer *);
 

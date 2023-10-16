@@ -23,8 +23,6 @@ void Parser :: to_tokenstring(Token *t)
 void Parser :: start(string sentence)
 {
     const char *content = &sentence[0];
-    //const char *content = "(p&q)->(p&(qvr))";
-    //const char *content = "(p->q)&((p&r)v(p<->t))";
     size_t cont_len = strlen(content);
     Lexer l = lexer_new(content, cont_len);
     Token t;
@@ -32,11 +30,11 @@ void Parser :: start(string sentence)
     to_tokenstring(&t);
 
     // Three valid starting characters of a well formed formula
-    if(t.kind == TOKEN_END){cout << "Invalid: WFF is empty " << endl;}
+    if(t.kind == TOKEN_END){cout << "Invalid: WFF is empty " << endl;well_formed = false;}
     else if(t.kind == TOKEN_LEFTPARANTHESES){follow(&l);}
     else if (t.kind == TOKEN_LETTER){follow(&l);}
     else if (t.kind == TOKEN_NEGATION){follow(&l);}
-    else{cout << "Invalid: WFF cannot start with '" << t.text[0] << "'" << endl;}
+    else{cout << "Invalid: WFF cannot start with '" << t.text[0] << "'" << endl;well_formed=false;}
 };
 void Parser :: follow(Lexer *l)
 {
@@ -45,9 +43,10 @@ void Parser :: follow(Lexer *l)
     while(t.kind != TOKEN_END)
     {
         this->to_tokenstring(&t);
-
-        if(t.kind == TOKEN_LETTER)
+        if(t.kind == TOKEN_EXCEPTION){well_formed = false;}
+        else if(t.kind == TOKEN_LETTER)
         {
+            //Problem where input "pt" for example will be allowed.
             t=lexer_next(l);
             switch(t.kind)
             {
@@ -66,7 +65,7 @@ void Parser :: follow(Lexer *l)
                 default:
                 {
                     cout << "Invalid: "<< token_kinderizer(t.kind)<< " cannot be here '" <<t.text << "'" << endl;
-                    break;
+                    well_formed = false;
                 }
             }
             
@@ -84,6 +83,7 @@ void Parser :: follow(Lexer *l)
                     continue;
                 default:
                     cout << "Invalid: "<< token_kinderizer(t.kind)<< " cannot be here '" <<t.text << "'" << endl;
+                    well_formed = false;
             }
         }
         else if(t.kind==TOKEN_LEFTPARANTHESES)
@@ -99,6 +99,7 @@ void Parser :: follow(Lexer *l)
                     continue;
                 default:
                     cout << "Invalid: "<< token_kinderizer(t.kind)<< " cannot be here '" <<t.text << "'" << endl;
+                    well_formed = false;
             }
         }
         else if(t.kind==TOKEN_RIGHTPARANTHESES)
@@ -120,6 +121,7 @@ void Parser :: follow(Lexer *l)
                     continue;
                 default:
                     cout << "Invalid: "<< token_kinderizer(t.kind)<< " cannot be here '" <<t.text << "'" << endl;
+                    well_formed = false;
             }
         }
         else if((t.kind & (TOKEN_AND | TOKEN_OR | TOKEN_ARROW | TOKEN_BIOCONDITONAL))>0)
@@ -135,14 +137,15 @@ void Parser :: follow(Lexer *l)
                      continue;
                  default:
                      cout << "Invalid: "<< token_kinderizer(t.kind)<< " cannot be here '" <<t.text << "'" << endl;
+                     well_formed = false;
             }
 
         }
 
-        else{cout << "ERROR IN PARSER.CPP" << endl;} // Even the most invalid of formula shouldnt get here.
+        else{cout << "ERROR IN PARSER.CPP" << endl;well_formed=false;} // Even the most invalid of formula shouldnt get here.
         
     }
-    if(l->parantheses != 0) {INVALID("UNEVEN PARANTHESES COUNT");}
+    if(l->parantheses != 0) {INVALID("UNEVEN PARANTHESES COUNT"); well_formed = false;}
     l_count = letter_count(l);
 
 }

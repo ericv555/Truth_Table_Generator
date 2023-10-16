@@ -125,7 +125,7 @@ Token lexer_next(Lexer *l)
     {
         l->cursor += 1;
             lexer_trim_left(l);
-            if(l->content[l->cursor] == '-') // could make is arrow and is conditonal functions to avoid nested if.
+            if(l->content[l->cursor] == '-')
             {
                 l->cursor +=1;
                 lexer_trim_left(l);

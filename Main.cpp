@@ -21,7 +21,7 @@ using namespace std;
     cout << "Option 1: Evaluate formula and get final truth values" << endl;
     cout << "Option 2: Given a formula will give Tautology, Contradiction, Contingency." << endl;
     cout << "Option 3: Check if two formulas are equivalent" << endl;
-    cout << "Option 3: Given an argument, will give whether the argument is valid or invalid." << endl;
+    cout << "Option 3: Given an argument, will print whether the argument is valid or invalid." << endl;
 
     return  0;
 }*/
@@ -30,16 +30,18 @@ using namespace std;
 
 int main()
 {
+    while(true){
     cout << "Enter logical expression" << endl;
     string sentence;
     cin >> sentence;
     Parser p;
     p.start(sentence);
-    Node root {p.token_string,p.l_count};
+    if(p.well_formed == false){break;}
+    Node root {p.token_string};
     Evaluator e;
     e.add_to_tree(&root);
     e.evaluate(p.l_count);
     cout << root.value << endl;
-    
+    }
     return 0;   
 }
