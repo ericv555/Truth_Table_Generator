@@ -25,6 +25,7 @@ void Evaluator:: value_generator(Node *node, int n, int total)
         boost::dynamic_bitset<> nbyte(n,j);
         node->value.push_back(nbyte[n-1]);
     }
+    
 }
 char Evaluator :: top_letter(){
     return (tree.top()->vec_t.front().text[0]);

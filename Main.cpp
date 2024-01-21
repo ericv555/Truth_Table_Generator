@@ -28,6 +28,8 @@ using namespace std;
 
 int main()
 {
+    cout << "The logical connectives this program uses are, v (disjunction), & (conjunction), -> (conditional), <-> (biconditonal) " << endl;
+    cout << "Compound propositions require parantheses." << endl;
     cout << "Here are a few examples of valid logical expressions:"<<endl;
     cout << "p&q "<<endl<< "~(p->q)"<<endl<< "((p&q)vs)->~(p<->x)"<<endl;
     cout << "Any letters can be used as variables except for v, which is the OR operator." <<endl<<endl;
@@ -44,6 +46,12 @@ int main()
     Evaluator e;
     e.add_to_tree(&root);
     e.evaluate(p.l_count);
-    cout << root.value << endl;}
+    int n = root.value.size();
+    for(int i=n-1;i>=0;i--)
+    {
+        cout<<root.value[i] <<endl;
+    }
+
+    }
     return 0;   
 }

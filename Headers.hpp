@@ -1,7 +1,6 @@
 #ifndef Headers_hpp
 #define Headers_hpp
-#include "Lexer.hpp"
-#include "ErrorHandling.hpp"  
+#include "Lexer.hpp" 
 #include "Node.hpp"
 #include "Parser.hpp"
 #include "Evaluator.hpp"

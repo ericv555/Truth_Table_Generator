@@ -145,7 +145,7 @@ void Parser :: follow(Lexer *l)
         else{cout << "ERROR IN PARSER.CPP" << endl;well_formed=false;} // Even the most invalid of formula shouldnt get here.
         
     }
-    if(l->parantheses != 0) {INVALID("UNEVEN PARANTHESES COUNT"); well_formed = false;}
+    if(l->parantheses != 0) {cout << "UNEVEN PARANTHESES COUNT" << endl; well_formed = false;}
     l_count = letter_count(l);
 
 }

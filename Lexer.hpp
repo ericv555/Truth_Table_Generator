@@ -7,7 +7,18 @@
 #include<unordered_set>
 using namespace std;
 
-
+/*
+To add a new operation this is a list of places that would need to be changed:
+1) Token_Kind enum would need to be updated.
+2) Parser would need to be updated: 
+    a)symbol added to parser start if it is a valid starting character.
+    b)added to parser:
+        i) must know what symbols can precede the symbol this must be rectified in the relevent else if statements.
+        ii) must have a new else if statement that includes all the characters that can validly follow the new symbol.
+3)Lexer would require the new symbol to be searched for & the length of that symbol
+4)If it is an operation that will impact truth value it must be added to node.cpp
+5)Lastly the symbol must be repsentable by binary operations and such a binary representation must be added to Evaluator.cpp
+*/
 typedef enum
 {
     TOKEN_END = 0,
